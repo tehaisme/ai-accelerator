@@ -3,22 +3,22 @@ kind: Notebook
 metadata:
   annotations:
     notebooks.opendatahub.io/inject-oauth: 'true'
-    opendatahub.io/image-display-name: Datascience notebook
+    opendatahub.io/image-display-name: Airflow notebook
     notebooks.opendatahub.io/oauth-logout-url: ''
     opendatahub.io/accelerator-name: ''
     openshift.io/description: ''
-    openshift.io/display-name: airflow-pipeline
-    notebooks.opendatahub.io/last-image-selection: 'airflow-pipeline:latest'
+    openshift.io/display-name: airflow-workbench
+    notebooks.opendatahub.io/last-image-selection: 'airflow-workbench:latest'
     argocd.argoproj.io/sync-options: ServerSideApply=true
-  name: airflow-pipeline
+  name: airflow-workbench
   namespace: parasol-insurance
 spec:
   template:
     spec:
       affinity: {}
       containers:
-        - name: airflow-pipeline
-          image: 'image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/airflow-pipeline:latest'
+        - name: airflow-workbench
+          image: 'image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/airflow-workbench:latest'
           resources:
             limits:
               cpu: '2'
@@ -29,7 +29,7 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /notebook/parasol-insurance/airflow-pipeline/api
+              path: /notebook/parasol-insurance/airflow-workbench/api
               port: notebook-port
               scheme: HTTP
             initialDelaySeconds: 10
@@ -39,7 +39,7 @@ spec:
           livenessProbe:
             failureThreshold: 3
             httpGet:
-              path: /notebook/parasol-insurance/airflow-pipeline/api
+              path: /notebook/parasol-insurance/airflow-workbench/api
               port: notebook-port
               scheme: HTTP
             initialDelaySeconds: 10
@@ -52,11 +52,11 @@ spec:
                 --ServerApp.port=8888
                 --ServerApp.token=''
                 --ServerApp.password=''
-                --ServerApp.base_url=/notebook/parasol-insurance/airflow-pipeline
+                --ServerApp.base_url=/notebook/parasol-insurance/airflow-workbench
                 --ServerApp.quit_button=False
                 --ServerApp.tornado_settings={"user":"user1","hub_host":"","hub_prefix":"/projects/parasol-insurance"}
             - name: JUPYTER_IMAGE
-              value: 'image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/airflow-pipeline:latest'
+              value: 'image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/airflow-workbench:latest'
             - name: PIP_CERT
               value: /etc/pki/tls/custom-certs/ca-bundle.crt
             - name: REQUESTS_CA_BUNDLE
@@ -74,7 +74,7 @@ spec:
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /opt/app-root/src
-              name: airflow-pipeline
+              name: airflow-workbench
             - mountPath: /dev/shm
               name: shm
             - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
@@ -83,11 +83,11 @@ spec:
               subPath: ca-bundle.crt
           workingDir: /opt/app-root/src
       enableServiceLinks: false
-      serviceAccountName: airflow-pipeline
+      serviceAccountName: airflow-workbench
       volumes:
-        - name: airflow-pipeline
+        - name: airflow-workbench
           persistentVolumeClaim:
-            claimName: airflow-pipeline
+            claimName: airflow-workbench
         - emptyDir:
             medium: Memory
           name: shm

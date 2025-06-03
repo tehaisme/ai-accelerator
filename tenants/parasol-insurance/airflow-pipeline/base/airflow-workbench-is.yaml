@@ -5,9 +5,9 @@ metadata:
     opendatahub.io/notebook-image-creator: admin
     opendatahub.io/notebook-image-desc: This is a custom notebook for running the airflow code
     opendatahub.io/notebook-image-name: Custom Notebook
-    opendatahub.io/notebook-image-url: ' quay.io/eformat/elyra-base:0.2.1'
+    opendatahub.io/notebook-image-url: 'quay.io/eformat/elyra-base:0.2.1'
     opendatahub.io/recommended-accelerators: '[]'
-  name: airflow-pipeline
+  name: airflow-notebook
   namespace: redhat-ods-applications
   labels:
     app.kubernetes.io/created-by: byon
@@ -21,10 +21,10 @@ spec:
       annotations:
         opendatahub.io/notebook-python-dependencies: '[]'
         opendatahub.io/notebook-software: '[]'
-        openshift.io/imported-from: ' quay.io/eformat/elyra-base:0.2.1'
+        openshift.io/imported-from: 'quay.io/eformat/elyra-base:0.2.1'
       from:
         kind: DockerImage
-        name: ' quay.io/eformat/elyra-base:0.2.1'
+        name: 'quay.io/eformat/elyra-base:0.2.1'
       importPolicy:
         importMode: Legacy
       referencePolicy:

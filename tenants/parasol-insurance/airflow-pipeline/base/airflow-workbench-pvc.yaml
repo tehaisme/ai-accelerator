@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: airflow-pipeline
+  name: airflow-workbench
   namespace: parasol-insurance
 spec:
   accessModes:
